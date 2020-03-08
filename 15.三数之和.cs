@@ -100,28 +100,6 @@ public class Solution {
                     resList.Add(a);
                     resList.Add(b);
                     resList.Add(c);
-                    // // 有序的加入
-                    // resList.Add(a);
-                    // if (b > a)
-                    // {
-                    //     resList.Add(b);
-                    // }else
-                    // {
-                    //     resList.Insert(0, b);
-                    // }
-                    // // 头/尾
-                    // if (c < resList[0])
-                    // {
-                    //     resList.Insert(0, c);
-                    // }else{
-                    //     if (c < resList[1])
-                    //     {
-                    //         resList.Insert(1, c);
-                    //     }else
-                    //     {
-                    //         resList.Add(c);
-                    //     }
-                    // }
                     string tmp = a + "-" + b;//resList[0] + "-" + resList[1];
                     if (!checkDic.ContainsKey(tmp))
                     {
