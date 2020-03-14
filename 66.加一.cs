@@ -19,19 +19,27 @@ public class Solution {
             }
             i--;
         }
-        // 判断进位
+        // // 判断进位
+        // if (plus)
+        // {
+        //     int[] newArr = new int[digits.Length + 1];
+        //     newArr[0] = 1;
+        //     for (int j = 1; j < newArr.Length; j++)
+        //     {
+        //         newArr[j] = digits[j - 1];
+        //     }
+        //     return newArr;
+        // } else {
+        //     return digits;
+        // }
+
+        // 这样写耗时大大减少
         if (plus)
         {
-            int[] newArr = new int[digits.Length + 1];
-            newArr[0] = 1;
-            for (int j = 1; j < newArr.Length; j++)
-            {
-                newArr[j] = digits[j - 1];
-            }
-            return newArr;
-        } else {
-            return digits;
-        }
+            digits = new int[digits.Length + 1];
+            digits[0] = 1;
+        } 
+        return digits;
     }
 
     public int[] PlusOne(int[] digits) {
