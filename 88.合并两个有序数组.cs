@@ -6,7 +6,7 @@
 
 // @lc code=start
 public class Solution {
-    public void Merge(int[] nums1, int m, int[] nums2, int n) {
+    public void Merge2(int[] nums1, int m, int[] nums2, int n) {
         // 双指针
         int j = m - 1;
         int k = n - 1;
@@ -29,6 +29,16 @@ public class Solution {
                     nums1[i] = nums2[k--];
                 }
             }
+        }
+    }
+
+    public void Merge(int[] nums1, int m, int[] nums2, int n) {
+        // 精简优化 代码是精简了，但效率并不高
+        while (m > 0 && n > 0) {
+            nums1[m + n - 1] = (nums1[m - 1] > nums2[n - 1]) ? nums1[--m] : nums2[--n];
+        }
+        while (n > 0) {
+            nums1[n - 1] = nums2[--n];
         }
     }
 }
