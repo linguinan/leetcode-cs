@@ -13,6 +13,15 @@ public class Solution {
         int rj = 0;
         findR (board, ref ri, ref rj);
 
+        // int[] dx = {-1, 0, 1, 0};
+        // int[] dy = {0, -1, 0, 1};
+        // for (int k = 0; k < 4; k++)
+        // {
+            
+        //     dx[k]
+        //     dy[k]
+        // }
+
         for (int i = ri - 1; i >= 0; i--) {
             if (board[i][rj] == 'B')
                 break;
