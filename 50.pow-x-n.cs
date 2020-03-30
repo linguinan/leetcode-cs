@@ -6,6 +6,12 @@
 
 // @lc code=start
 public class Solution {
+    /// <summary>
+    /// 分治法，拆分子问题
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="n"></param>
+    /// <returns></returns>
     public double MyPow2(double x, int n) {
         // 递归的解法
         if (n == 0 || x == 1)
