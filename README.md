@@ -8,3 +8,75 @@
 自顶向下的解题
 
 把每周的作业写完后一次提交，把提交的commit拷贝到issue里，不要拷贝目录链接！！
+
+
+# 需熟记的代码模版
+
+## DFS
+
+
+## BFS
+
+迭代法用队列实现
+分两种：
+1.入列后，依次出列
+2.入列后，每次都取出当前列中所有
+
+## 递归
+
+## 分治回溯
+
+## 动态规划
+
+## 二分查找
+
+欧几里得算法，又名辗转相除法
+````c#
+// 求最大公约数的算法
+// 递归
+public int gcd (int x, int y) {
+    return (x == 0) ? y : gcd (y % x, x);
+}
+// 迭代
+public int gcd (int x, int y) {
+    while (y != 0) {
+        int r = y;
+        y = x % y;
+        x = r;
+    }
+    return x;
+}
+````
+
+````c#
+// 位运算 与 & 二进制 1&1 = 1 其他情况都为 0
+3 & 1 -> 11 & 01 = 1
+4 & 1 -> 100 & 001 = 0
+5 & 1 -> 101 & 001 = 1
+6 & 1 -> 110 & 001 = 0
+// 也就区分了奇偶数 
+System.Console.WriteLine (3 & 1);
+System.Console.WriteLine (4 & 1);
+````
+
+````c#
+// 二维数组周围8个邻居
+int[][] dirs = {
+    new int[] {-1, -1 },
+    new int[] { 0, -1 },
+    new int[] { 1, -1 },
+    new int[] {-1, 0 },
+    new int[] { 1, 0 },
+    new int[] {-1, 1 },
+    new int[] { 0, 1 },
+    new int[] { 1, 1 }
+};
+// 也可写出如下，用两层循环实现上面到二维数组
+int neighbors[3] = {0, 1, -1};
+for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+        // 0 -> neighbors[i] 
+        // 1 -> neighbors[j]
+    }
+}
+````
