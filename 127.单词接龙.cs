@@ -5,10 +5,18 @@
  */
 
 // @lc code=start
-using System;
 using System.Collections.Generic;
 
 public class Solution {
+    /// <summary>
+    /// BFS 
+    /// 先对字典做预处理，实现树结构
+    /// 用 visited 表实现剪枝，避免重复访问
+    /// </summary>
+    /// <param name="beginWord"></param>
+    /// <param name="endWord"></param>
+    /// <param name="wordList"></param>
+    /// <returns></returns>
     public int LadderLength (string beginWord, string endWord, IList<string> wordList) {
         int len = beginWord.Length;
         Dictionary<string, List<string>> dic = new Dictionary<string, List<string>> ();
@@ -24,7 +32,6 @@ public class Solution {
                 dic[key].Add (word);
             }
         }
-        // BFS
         Queue<KeyValuePair<string, int>> queue = new Queue<KeyValuePair<string, int>> ();
         queue.Enqueue (new KeyValuePair<string, int> (beginWord, 1));
 
@@ -36,16 +43,15 @@ public class Solution {
             for (int i = 0; i < size; i++) {
                 var cur = queue.Dequeue ();
                 string word = cur.Key;
-                if (word == endWord) {
-                    return cur.Value;
-                }
-
                 for (int j = 0; j < len; j++) {
                     char[] arr = word.ToCharArray ();
                     arr[j] = '*';
                     string key = new string (arr);
                     if (dic.ContainsKey (key)) {
                         foreach (var item in dic[key]) {
+                            if (item == endWord) {
+                                return cur.Value + 1;
+                            }
                             if (!visited.Contains (item)) {
                                 visited.Add (item);
                                 queue.Enqueue (new KeyValuePair<string, int> (item, cur.Value + 1));
@@ -60,14 +66,3 @@ public class Solution {
     }
 }
 // @lc code=end
-
-// static int Main(string[] args)
-// {
-//     char[] arr = "abc".ToCharArray();
-//     arr[0] = '*';
-//     System.Console.WriteLine(arr);
-//     string str = new string(arr);
-//     System.Console.WriteLine(str);
-//     return 0;
-// }
-// Main (null);
