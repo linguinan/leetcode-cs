@@ -13,9 +13,38 @@
 # 需熟记的代码模版
 
 ## DFS
+````python
+def dfs(node):
+    if node in visited:
+        # already visited
+        return
+    visited.add(node)
 
+    # process current Node
+    # ... # logic here
+    dfs(node.left)
+    dfs(node.right)
+
+    for next_node in node.children():
+        if not next_node in visited:
+            dfs(next_node)
+````
 
 ## BFS
+````python
+def bfs(graph, start, end):
+    queue = []
+    queue.append([start])
+    visited.add(start)
+    while queue:
+        node = queue.pop()
+        visited.add(node)
+
+        process(node)
+        nodes = generate_related_nodes(node)
+        queue.push(nodes)
+    # other processing work
+````
 
 迭代法用队列实现
 分两种：
@@ -29,6 +58,39 @@
 ## 动态规划
 
 ## 二分查找
+前提：
+- 1.目标函数单调性（单调递增或者递减）
+- 2.存在上下界（bounded）
+- 3.能够通过索引访问（index accessible）
+````python
+left, right = 0, len(array) - 1
+while left <= right:
+    mid = (left + right) / 2
+    if array[mid] == target:
+        # find the target!!
+        break or return result
+    elif array[mid] < target:
+        left = mid + 1
+    else:
+        right = mid - 1
+````
+````c#
+int left = 0, right = arr.Length - 1;
+while (left <= right) {
+    int mid = left + (right - left) / 2;
+    if (arr[mid] == target) {
+        // break;
+        return mid;
+    } else {
+        if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+}
+return left;
+````
 
 欧几里得算法，又名辗转相除法
 ````c#
