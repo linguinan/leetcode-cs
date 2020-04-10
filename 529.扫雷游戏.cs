@@ -8,7 +8,13 @@
 using System.Collections.Generic;
 
 public class Solution {
-    public char[][] UpdateBoard (char[][] board, int[] click) {
+    /// <summary>
+    /// 递归
+    /// </summary>
+    /// <param name="board"></param>
+    /// <param name="click"></param>
+    /// <returns></returns>
+    public char[][] UpdateBoard2 (char[][] board, int[] click) {
         int i = click[0], j = click[1];
         char c = board[i][j];
         if (c == 'M') {
@@ -55,8 +61,59 @@ public class Solution {
             }
             return 'B';
         } else {
-            return (char)(ball + '0');//char.Parse (ball.ToString ());
+            return (char) (ball + '0'); //char.Parse (ball.ToString ());
         }
+    }
+
+    /// <summary>
+    /// BFS
+    /// </summary>
+    /// <param name="board"></param>
+    /// <param name="click"></param>
+    /// <returns></returns>
+    public char[][] UpdateBoard (char[][] board, int[] click) {
+        int i = click[0], j = click[1];
+        char c = board[i][j];
+        if (c == 'M') {
+            board[i][j] = 'X';
+            return board;
+        }
+        if (c != 'E') return board;
+
+        Queue<int[]> queue = new Queue<int[]> ();
+        queue.Enqueue (click);
+        int m = board.Length - 1, n = board[0].Length - 1;
+        while (queue.Count > 0) {
+            int[] pt = queue.Dequeue ();
+            int row = pt[0], col = pt[1], mine = 0;
+            // 去重
+            if (board[row][col] != 'E') continue;
+            // 遍历周围
+            for (int di = -1; di <= 1; di++) {
+                for (int dj = -1; dj <= 1; dj++) {
+                    if (di == 0 && dj == 0) continue;
+                    i = row + di;
+                    j = col + dj;
+                    if (i < 0 || i > m || j < 0 || j > n) continue;
+                    if (board[i][j] == 'M') mine++;
+                }
+            }
+            if (mine == 0) {
+                for (int di = -1; di <= 1; di++) {
+                    for (int dj = -1; dj <= 1; dj++) {
+                        if (di == 0 && dj == 0) continue;
+                        i = row + di;
+                        j = col + dj;
+                        if (i < 0 || i > m || j < 0 || j > n) continue;
+                        queue.Enqueue (new int[] { i, j });
+                    }
+                }
+                board[row][col] = 'B';
+            } else {
+                board[row][col] = (char) (mine + '0');
+            }
+        }
+        return board;
     }
 }
 // @lc code=end
