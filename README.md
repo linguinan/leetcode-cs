@@ -12,7 +12,7 @@
 
 # 需熟记的代码模版
 
-## DFS
+## DFS（Depth-First-Search） 多用stack（先进后出）实现
 ````python
 def dfs(node):
     if node in visited:
@@ -30,7 +30,7 @@ def dfs(node):
             dfs(next_node)
 ````
 
-## BFS
+## BFS（Breadth First Search）多用queue（先进先出）实现
 ````python
 def bfs(graph, start, end):
     queue = []
@@ -52,8 +52,59 @@ def bfs(graph, start, end):
 2.入列后，每次都取出当前列中所有
 
 ## 递归
+递归指由一种（或多种）简单的基本情况定义的一类对象或方法，并规定其他所有情况都能被还原为其基本情况  
+思维要点：  
+- 1. 不要人肉递归（最大误区）
+- 2. 找到最近最简方法，将其拆解成可重复解决的问题（重复子问题）
+- 3. 数学归纳法思维
+````c#
+public void recursion(int level, int param) {
+    // terminator
+    if (level > MAX_LEVEL) {
+        // process result
+        return;
+    }
+
+    // process current logic
+    process(level, param);
+
+    // drill down
+    recursion(level + 1, newParam);
+
+    // restore current status
+}
+````
 
 ## 分治回溯
+分治和回溯本质上都是递归  
+“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。
+````python
+def divide_conquer(problem, param1, param2, ...):
+    # recursion terminator
+    if problem is None:
+        print_result
+        return
+    # prepare data
+    data = prepare_data(problem)
+    subproblems = split_problem(problem, data)
+    # conquer subproblems
+    subresult1 = self.divide_conquer(subproblems[0], p1, ...)
+    subresult2 = self.divide_conquer(subproblems[1], p1, ...)
+    subresult3 = self.divide_conquer(subproblems[2], p1, ...)
+    ...
+    # process and generate the final result
+    result = process_result(subresult1, subresult2, subresult3, ...)
+    # revert the current level states
+````
+
+回溯法是一种可以找出所有（或一部分）解的一般性算法，
+尤其适用于约束满足问题（在解决约束满足问题时，我们逐步构造更多的候选解，并且在确定某一部分候选解不可能补全成正确解之后放弃继续搜索这个部分候选解本身及其可以拓展出的子候选解，转而测试其他的部分候选解）  
+
+回溯法采用试错的思想，它尝试分步的去解决一个问题。在分步解决问题的过程中，当它通过尝试，发现现有的分步答案不能得到有效的正确的解答的时候，它将取消上一步甚至是上几步的计算，再通过其它的可能的分步解答再次尝试寻找问题的答案。  
+回溯法通常用最简单的递归方法来实现，在反复重复上述的步骤后可能出现两种情况:  
+- 找到一个可能存在的正确的答案;
+- 在尝试了所有可能的分步方法后宣告该问题没有答案。 
+在最坏的情况下，回溯法会导致一次复杂度为指数时间的计算。
 
 ## 动态规划
 
@@ -139,6 +190,13 @@ for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
         // 0 -> neighbors[i] 
         // 1 -> neighbors[j]
+    }
+}
+// 
+for (int di = -1; di <= 1; di++) {
+    for (int dj = -1; dj <= 1; dj++) {
+        if (di == 0 && dj == 0) continue;
+        //...
     }
 }
 ````
