@@ -5,10 +5,11 @@
  */
 
 // @lc code=start
+using System.Collections.Generic;
 using System.Text;
 
 public class Solution {
-    public string ReverseWords (string s) {
+    public string ReverseWords2 (string s) {
         if (string.IsNullOrEmpty (s)) {
             return string.Empty;
         }
@@ -25,10 +26,45 @@ public class Solution {
         }
         return sb.ToString ();
     }
+
+    /// <summary>
+    /// 双指针
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    public string ReverseWords (string s) {
+        // if (string.IsNullOrEmpty (s)) {
+        //     return string.Empty;
+        // }
+        int left = 0, right = s.Length - 1;
+        while (left <= right && s[left] == ' ') left++;
+        while (left <= right && s[right] == ' ') right--;
+
+        List<string> list = new List<string> ();
+        StringBuilder sb = new StringBuilder ();
+        while (left <= right) {
+            char c = s[left];
+            if (c != ' ') {
+                sb.Append (c);
+            } else {
+                if (sb.Length > 0) {
+                    list.Insert (0, sb.ToString ());
+                    sb.Clear ();
+                }
+            }
+            left++;
+        }
+        if (sb.Length > 0) {
+            list.Insert (0, sb.ToString ());
+        }
+        return string.Join (" ", list);
+    }
 }
 // @lc code=end
 
 static int Main (string[] args) {
+    System.Console.WriteLine (new Solution ().ReverseWords ("the sky is blue"));
+    System.Console.WriteLine (new Solution ().ReverseWords ("  hello world!  "));
     System.Console.WriteLine (new Solution ().ReverseWords ("a good   example"));
     return 0;
 }
