@@ -17,7 +17,7 @@ using System.Collections.Generic;
  */
 public class Solution {
     /// <summary>
-    /// ?????????O(n)
+    /// 哈希法，空间复杂度O(n)
     /// </summary>
     /// <param name="headA"></param>
     /// <param name="headB"></param>
@@ -40,7 +40,8 @@ public class Solution {
     }
 
     /// <summary>
-    /// ?????
+    /// 双指针，空间复杂度O(1)
+    /// 链表循环总相遇
     /// </summary>
     /// <param name="headA"></param>
     /// <param name="headB"></param>
