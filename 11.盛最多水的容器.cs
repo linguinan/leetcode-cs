@@ -21,6 +21,12 @@ public class Solution {
     //     return max;
     // }
 
+    /// <summary>
+    /// 双指针移动，时间复杂度O(n)
+    /// 两边逼近，以小的一方做h计算面积，谁小谁往中间移动
+    /// </summary>
+    /// <param name="height"></param>
+    /// <returns></returns>
     public int MaxArea(int[] height) {
         int max = 0;
         for (int i = 0, j = height.Length - 1; i < j;)
