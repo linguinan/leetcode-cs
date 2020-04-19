@@ -15,7 +15,7 @@ public class Solution {
     /// </summary>
     /// <param name="triangle"></param>
     /// <returns></returns>
-    public int MinimumTotal (IList<IList<int>> triangle) {
+    public int MinimumTotal2 (IList<IList<int>> triangle) {
         List<IList<int>> resList = new List<IList<int>> (triangle.Count);
         int lastIndex = triangle.Count - 1;
         for (int i = 0; i < triangle.Count; i++) {
@@ -29,6 +29,26 @@ public class Solution {
             }
         }
         return resList[0][0];
+    }
+
+    /// <summary>
+    /// 改用一层数组缓存结果
+    /// </summary>
+    /// <param name="triangle"></param>
+    /// <returns></returns>
+    public int MinimumTotal (IList<IList<int>> triangle) {
+        if (triangle == null || triangle.Count == 0) return 0;
+        int lastIndex = triangle.Count - 1;
+        int[] res = new int[triangle[lastIndex].Count];
+        for (int i = 0; i < triangle[lastIndex].Count; i++) {
+            res[i] = triangle[lastIndex][i];
+        }
+        for (int i = lastIndex - 1; i >= 0; i--) {
+            for (int j = 0; j < triangle[i].Count; j++) {
+                res[j] = Math.Min (res[j], res[j + 1]) + triangle[i][j];
+            }
+        }
+        return res[0];
     }
 }
 // @lc code=end
