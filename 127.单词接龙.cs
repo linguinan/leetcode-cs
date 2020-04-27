@@ -17,7 +17,9 @@ public class Solution {
     /// <param name="endWord"></param>
     /// <param name="wordList"></param>
     /// <returns></returns>
-    public int LadderLength (string beginWord, string endWord, IList<string> wordList) {
+    public int LadderLength2 (string beginWord, string endWord, IList<string> wordList) {
+        if (!wordList.Contains (endWord)) return 0;
+
         int len = beginWord.Length;
         Dictionary<string, List<string>> dic = new Dictionary<string, List<string>> ();
         // 预处理
@@ -63,6 +65,80 @@ public class Solution {
         }
 
         return 0;
+    }
+
+    private int wordLen;
+    private Dictionary<string, List<string>> preDic;
+
+    /// <summary>
+    /// 实现双向 BFS
+    /// 从beginWord和endWord同时BFS，相交即结束
+    /// </summary>
+    /// <param name="beginWord"></param>
+    /// <param name="endWord"></param>
+    /// <param name="wordList"></param>
+    /// <returns></returns>
+    public int LadderLength (string beginWord, string endWord, IList<string> wordList) {
+        if (!wordList.Contains (endWord)) return 0;
+
+        wordLen = beginWord.Length;
+        preDic = new Dictionary<string, List<string>> ();
+        // 预处理
+        foreach (string word in wordList) {
+            for (int i = 0; i < wordLen; i++) {
+                char[] arr = word.ToCharArray ();
+                arr[i] = '*';
+                string key = new string (arr);
+                if (!preDic.ContainsKey (key)) {
+                    preDic.Add (key, new List<string> ());
+                }
+                preDic[key].Add (word);
+            }
+        }
+
+        Queue<KeyValuePair<string, int>> beginQueue = new Queue<KeyValuePair<string, int>> ();
+        Queue<KeyValuePair<string, int>> endQueue = new Queue<KeyValuePair<string, int>> ();
+        beginQueue.Enqueue (new KeyValuePair<string, int> (beginWord, 1));
+        endQueue.Enqueue (new KeyValuePair<string, int> (endWord, 1));
+
+        Dictionary<string, int> beginVisited = new Dictionary<string, int> ();
+        Dictionary<string, int> endVisited = new Dictionary<string, int> ();
+        beginVisited.Add (beginWord, 1);
+        endVisited.Add (endWord, 1);
+
+        while (beginQueue.Count > 0 && endQueue.Count > 0) {
+            int ans = visitWordNode (beginQueue, beginVisited, endVisited);
+            if (ans > -1) return ans;
+            ans = visitWordNode (endQueue, endVisited, beginVisited);
+            if (ans > -1) return ans;
+        }
+        return 0;
+    }
+
+    private int visitWordNode (Queue<KeyValuePair<string, int>> queue, Dictionary<string, int> visited, Dictionary<string, int> otherVisited) {
+        int size = queue.Count;
+        for (int i = 0; i < size; i++) {
+            var cur = queue.Dequeue ();
+            string word = cur.Key;
+            for (int j = 0; j < wordLen; j++) {
+                char[] arr = word.ToCharArray ();
+                arr[j] = '*';
+                string key = new string (arr);
+                if (preDic.ContainsKey (key)) {
+                    foreach (var item in preDic[key]) {
+                        if (otherVisited.ContainsKey (item)) {
+                            return cur.Value + otherVisited[item];
+                        }
+                        if (!visited.ContainsKey (item)) {
+                            int level = cur.Value + 1;
+                            visited.Add (item, level);
+                            queue.Enqueue (new KeyValuePair<string, int> (item, level));
+                        }
+                    }
+                }
+            }
+        }
+        return -1;
     }
 }
 // @lc code=end
