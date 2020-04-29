@@ -12,7 +12,7 @@ public class Solution {
     /// </summary>
     /// <param name="nums"></param>
     /// <returns></returns>
-    public int[] SingleNumbers (int[] nums) {
+    public int[] SingleNumbers2 (int[] nums) {
         int ret = 0;
         // 先对所有数字进行一次异或，得到两个出现一次的数字的异或值
         foreach (int num in nums)
@@ -38,6 +38,24 @@ public class Solution {
             else
                 b ^= num;
         return new int[] { a, b };
+    }
+
+    /// <summary>
+    /// 这个解法够简短，分析下实现？
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public int[] SingleNumbers(int[] nums) {
+        int xorSum = 0;
+        // 找出出现单次的两个数的异或值
+        foreach (int num in nums) xorSum ^= num;
+        // 分组
+        int lowbit = xorSum & (-xorSum);
+        int[] ret = new int[2] {0, 0};
+        foreach (int num in nums) {
+            ret[(num & lowbit) > 0 ? 0 : 1] ^= num;
+        }
+        return ret;
     }
 }
 
