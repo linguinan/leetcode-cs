@@ -15,25 +15,21 @@
  * }
  */
 public class Solution {
-    public bool IsValidBST(TreeNode root) {
-        // 递归实现
-        return validate(root, null, null);
+    /// <summary>
+    /// 递归实现
+    /// </summary>
+    /// <param name="root"></param>
+    /// <returns></returns>
+    public bool IsValidBST (TreeNode root) {
+        return validate (root, null, null);
     }
 
     // 注意，此处min和max需用引用对象来表示，以此判断是否有可比较值
-    private bool validate(TreeNode root, TreeNode min, TreeNode max)
-    {
-        if (root == null)
-            return true;
-
-        int val = root.val;
-        if (min != null && val <= min.val)
-            return false;
-        if (max != null && val >= max.val)
-            return false;
-
-        return validate(root.left, min, root) && validate(root.right, root, max);
+    private bool validate (TreeNode root, TreeNode min, TreeNode max) {
+        if (root == null) return true;
+        if (min != null && min.val >= root.val) return false;
+        if (max != null && max.val <= root.val) return false;
+        return validate (root.left, min, root) && validate (root.right, root, max);
     }
 }
 // @lc code=end
-
