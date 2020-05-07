@@ -56,6 +56,13 @@ public class Solution {
         return dfs (s, t);
     }
 
+    /// <summary>
+    /// 此处关键在于check为false后，会继续遍历子树的可能性
+    /// 我上面那个队列的方式，失误在于第一次搜索到值相同时就没再向下考虑了
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="t"></param>
+    /// <returns></returns>
     private bool dfs (TreeNode s, TreeNode t) {
         if (s == null) return false;
         return check (s, t) || dfs (s.left, t) || dfs (s.right, t);
