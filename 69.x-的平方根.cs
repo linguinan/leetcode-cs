@@ -6,33 +6,29 @@
 
 // @lc code=start
 public class Solution {
-    public int MySqrt(int x) {
-        // ????
-        if (x == 0 || x == 1)
-            return x;
+    /// <summary>
+    /// 二分查找
+    /// res 的平方 小于等于 x
+    /// 用二分法缩小res的范围直至结果
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    public int MySqrt (int x) {
+        if (x == 0 || x == 1) return x;
 
-        int left = 1;
-        int right = x;
-        int res = 0;
-
-        while (left <= right)
-        {
-            int min = (left + right) / 2;
+        int left = 1, right = x, res = 0;
+        while (left <= right) {
+            int min = (left + right) >> 1;
             if (min == x / min)
                 return min;
-            if (min < x / min)
-            {
+            if (min < x / min) {
                 left = min + 1;
-                // int ?????
                 res = min;
-            }else
-            {
+            } else {
                 right = min - 1;
             }
         }
-
         return res;
     }
 }
 // @lc code=end
-
