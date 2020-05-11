@@ -52,22 +52,49 @@ public class Solution {
         return ans;
     }
 
-    public double MyPow (double x, int n) {
+    /// <summary>
+    /// 分治，代码精简，O(logn)
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public double MyPow4 (double x, int n) {
         if (n == 0 || x == 1) return 1;
-        if (n < 0) return 1 / (x * MyPow(x, -n - 1));
+        if (n < 0) return 1 / (x * MyPow (x, -n - 1));
         return (n % 2 == 0) ? MyPow (x * x, n / 2) : x * MyPow (x, n - 1);
     }
 
+    /// <summary>
+    /// 迭代，二进制位为1的多累积一次
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public double MyPow (double x, int n) {
+        if (n == 0 || x == 1) return 1;
+        if (n < 0) return 1 / (x * MyPow (x, -n - 1));
+        double ans = 1, ctb = x;
+        while (n > 0) {
+            if (n % 2 == 1) {
+                ans *= ctb;
+            }
+            ctb *= ctb;
+            n >>= 1;
+        }
+        return ans;
+    }
 
 }
 // @lc code=end
 
 // int max 2147483647.
 
-static int Main(string[] args)
-{
-    Solution solution = new Solution();
-    System.Console.WriteLine(solution.MyPow(2.0, -2147483648));//0
+static int Main (string[] args) {
+    Solution solution = new Solution ();
+    System.Console.WriteLine (solution.MyPow (3, 0)); //1
+    System.Console.WriteLine (solution.MyPow (1, 3)); //1
+    System.Console.WriteLine (solution.MyPow (2, 10)); //1024
+    System.Console.WriteLine (solution.MyPow (2.0, -2147483648)); //0
     return 0;
 }
 Main (null);
