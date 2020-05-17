@@ -9,6 +9,11 @@ using System.Collections.Generic;
 using System.Text;
 
 public class Solution {
+    /// <summary>
+    /// 拆分单词，从后往前加入新字符串中
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
     public string ReverseWords2 (string s) {
         if (string.IsNullOrEmpty (s)) {
             return string.Empty;
