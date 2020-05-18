@@ -15,7 +15,7 @@ public class Solution {
     /// </summary>
     /// <param name="nums"></param>
     /// <returns></returns>
-    public int MaxProduct (int[] nums) {
+    public int MaxProduct2 (int[] nums) {
         int max = int.MinValue, iMax = 1, iMin = 1;
         for (int i = 0; i < nums.Length; i++) {
             if (nums[i] < 0) {
@@ -27,6 +27,31 @@ public class Solution {
             iMax = Math.Max (iMax * nums[i], nums[i]);
             iMin = Math.Min (iMin * nums[i], nums[i]);
             max = Math.Max (max, iMax);
+        }
+        return max;
+    }
+
+    /// <summary>
+    /// 动态规划
+    /// 状态转移方程: dp[i, 0] = Math.Max(dp[i - 1, 0] * nums[i], nums[i]);
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public int MaxProduct (int[] nums) {
+        if (nums == null || nums.Length == 0) return 0;
+        int[, ] dp = new int[nums.Length, 2];
+        dp[0, 0] = nums[0];
+        dp[0, 1] = nums[0];
+        int max = nums[0];
+        for (int i = 1; i < nums.Length; i++) {
+            if (nums[i] > 0) {
+                dp[i, 0] = Math.Max (dp[i - 1, 0] * nums[i], nums[i]);
+                dp[i, 1] = Math.Min (dp[i - 1, 1] * nums[i], nums[i]);
+            } else {
+                dp[i, 0] = Math.Max (dp[i - 1, 1] * nums[i], nums[i]);
+                dp[i, 1] = Math.Min (dp[i - 1, 0] * nums[i], nums[i]);
+            }
+            max = Math.Max (max, dp[i, 0]);
         }
         return max;
     }
