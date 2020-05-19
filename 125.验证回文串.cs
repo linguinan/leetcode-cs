@@ -53,7 +53,7 @@ public class Solution {
     }
 
     /// <summary>
-    /// 双指针
+    /// 双指针  时间复杂度 O(N)
     /// 剔除非字母和数字，比较小写是否相等
     /// </summary>
     /// <param name="s"></param>
