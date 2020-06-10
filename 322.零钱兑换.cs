@@ -40,13 +40,14 @@ public class Solution {
     }
 
     /// <summary>
-    /// 动态规划 + 自上而下
+    /// 动态规划： 自上而下
     /// 最优子结构：当前 amount 所需最少硬币数 = amount - 其中一个硬币面额的最小数 + 1
+    /// 时间复杂度：O(Sn), 其中 S 是金额, n 是面额数
     /// </summary>
     /// <param name="coins"></param>
     /// <param name="amount"></param>
     /// <returns></returns>
-    public int CoinChange (int[] coins, int amount) {
+    public int CoinChange3 (int[] coins, int amount) {
         if (amount < 1) return 0;
         return CoinChange (coins, amount, new int[amount]);
     }
@@ -62,6 +63,28 @@ public class Solution {
         }
         memo[rem - 1] = (min == int.MaxValue) ? -1 : min;
         return memo[rem - 1];
+    }
+
+    /// <summary>
+    /// 动态规划： 自下而上
+    /// 类似fab数列，自下计数，提前算好每个总额时所需的最少银币数
+    /// </summary>
+    /// <param name="coins"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public int CoinChange (int[] coins, int amount) {
+        int Max = amount + 1;
+        int[] memo = new int[Max];
+        Array.Fill (memo, Max);
+        memo[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.Length; j++) {
+                if (coins[j] <= i) {
+                    memo[i] = Math.Min (memo[i], memo[i - coins[j]] + 1);
+                }
+            }
+        }
+        return memo[amount] > amount ? -1 : memo[amount];
     }
 
     // /// <summary>
