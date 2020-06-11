@@ -39,7 +39,7 @@ public class Solution {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public string LongestPalindrome (string s) {
+    public string LongestPalindrome5 (string s) {
         if (s.Length < 2) return s;
         int maxLen = 1, startIndex = 0;
         for (int i = 0; i < s.Length - 1; i++) {
@@ -64,14 +64,43 @@ public class Solution {
         return right - left - 1;
     }
 
-    // /// <summary>
-    // /// 动态规划
-    // /// 状态转移方程：dp[i][j] = s[i] == s[j] and dp[i + 1][j - 1]
-    // /// </summary>
-    // /// <param name="s"></param>
-    // /// <returns></returns>
-    // public string LongestPalindrome (string s) {
-
-    // }
+    /// <summary>
+    /// 动态规划    O(n2)
+    /// 状态 dp[i][j] 表示子串 s[i..j] 是否为回文子串
+    /// 状态转移方程：dp[i][j] = s[i] == s[j] and dp[i + 1][j - 1]
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    public string LongestPalindrome (string s) {
+        if (s.Length < 2) return s;
+        int startIndex = 0, maxLen = 1, sLen = s.Length;
+        // init
+        bool[][] dp = new bool[sLen][];
+        for (int i = 0; i < sLen; i++) {
+            dp[i] = new bool[sLen];
+            dp[i][i] = true;
+        }
+        // for col
+        for (int j = 1; j < sLen; j++) {
+            for (int i = 0; i < j; i++) {
+                if (s[i] != s[j]) {
+                    dp[i][j] = false;
+                } else {
+                    if (j - i < 3) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+                if (dp[i][j]) {
+                    if (j - i + 1 > maxLen) {
+                        maxLen = j - i + 1;
+                        startIndex = i;
+                    }
+                }
+            }
+        }
+        return s.Substring (startIndex, maxLen);
+    }
 }
 // @lc code=end
