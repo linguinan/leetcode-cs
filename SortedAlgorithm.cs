@@ -141,6 +141,73 @@ public class SortedAlgorithm {
         t = 0;
         while (left <= right) nums[left++] = tmp[t++];
     }
+
+    /// <summary>
+    /// 桶排序
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public int[] BucketSort (int[] nums) {
+        return nums;
+    }
+
+    /// <summary>
+    /// 计数排序
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public int[] CountSort (int[] nums) {
+        return nums;
+    }
+
+    /// <summary>
+    /// 希尔排序    又叫缩小增量排序    插入排序的改进版    非稳定排序
+    /// 基本思想：
+    /// 先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，
+    /// 待整个序列中待记录“基本有序”时，再对全体记录进行一次直接插入排序
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public int[] ShellSort (int[] nums) {
+        int len = nums.Length;
+        // / 2 拆分两半，后半部分和前半部分进行比较，把大的替换到后面来
+        int gap = len / 2;
+        while (gap >= 1) {
+            for (int i = 0; i < len; i++) {
+                int j = i;
+                // j 大于 gap 且 前面的数大于后面的，则调换
+                while (j >= gap && nums[j - gap] > nums[j]) {
+                    System.Console.WriteLine(j + " - " + nums[j] + " | " + (j - gap) + " - " + nums[j - gap]);
+                    int tmp = nums[j];
+                    nums[j] = nums[j - gap];
+                    nums[j - gap] = tmp;
+                    j -= gap;
+                }
+            }
+            System.Console.WriteLine("for : " + gap + " - " + string.Join (",", nums));
+            gap = gap / 2;
+        }
+        return nums;
+    }
+
+    /// <summary>
+    /// 堆排序
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public int[] HeapSort (int[] nums) {
+        return nums;
+    }
+
+    /// <summary>
+    /// 基数排序
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public int[] RadixSort (int[] nums) {
+        return nums;
+    }
+
 }
 
 static int Main (string[] args) {
@@ -151,6 +218,8 @@ static int Main (string[] args) {
     System.Console.WriteLine (string.Join (",", ins.InsertionSort ((int[]) nums.Clone ())));
     System.Console.WriteLine (string.Join (",", ins.QuickSort ((int[]) nums.Clone ())));
     System.Console.WriteLine (string.Join (",", ins.MergeSort ((int[]) nums.Clone ())));
+    System.Console.WriteLine (string.Join (",", ins.ShellSort ((int[]) nums.Clone ())));
+
     // System.Console.WriteLine (string.Join (",", nums));
     return 0;
 }
