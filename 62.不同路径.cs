@@ -15,7 +15,7 @@ public class Solution {
     /// <param name="m"></param>
     /// <param name="n"></param>
     /// <returns></returns>
-    public int UniquePaths (int m, int n) {
+    public int UniquePaths2 (int m, int n) {
         int[][] res = new int[m][];
         for (int i = 0; i < m; i++) {
             res[i] = new int[n];
@@ -33,6 +33,27 @@ public class Solution {
             }
         }
         return res[0][0];
+    }
+
+    /// <summary>
+    /// 用一维数组解
+    /// </summary>
+    /// <param name="m"></param>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public int UniquePaths (int m, int n) {
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            res[i] = 1;
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                // j 为 从右向左 计数
+                // 每次累加后的结果就是下一行的路径数，相当于下方和右方的结果和
+                res[j] += res[j - 1];
+            }
+        }
+        return res[n - 1];
     }
 }
 // @lc code=end
