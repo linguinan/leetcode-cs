@@ -45,7 +45,7 @@ public class Solution {
     /// </summary>
     /// <param name="obstacleGrid"></param>
     /// <returns></returns>
-    public int UniquePathsWithObstacles (int[][] obstacleGrid) {
+    public int UniquePathsWithObstacles3 (int[][] obstacleGrid) {
         if (obstacleGrid[0][0] == 1) return 0;
         int m = obstacleGrid.Length, n = obstacleGrid[0].Length;
         obstacleGrid[0][0] = 1;
@@ -65,6 +65,29 @@ public class Solution {
             }
         }
         return obstacleGrid[m - 1][n - 1];
+    }
+
+    /// <summary>
+    /// 一维解法
+    /// </summary>
+    /// <param name="obstacleGrid"></param>
+    /// <returns></returns>
+    public int UniquePathsWithObstacles (int[][] obstacleGrid) {
+        if (obstacleGrid[0][0] == 1) return 0;
+        int m = obstacleGrid.Length, n = obstacleGrid[0].Length;
+        int[] res = new int[n];
+        res[0] = 1;
+        for (int i = 0; i < m; i++) {
+            if (obstacleGrid[i][0] == 1) res[0] = 0;
+            for (int j = 1; j < n; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    res[j] = 0;
+                } else {
+                    res[j] += res[j - 1];
+                }
+            }
+        }
+        return res[n - 1];
     }
 }
 // @lc code=end
